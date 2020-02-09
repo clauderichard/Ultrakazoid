@@ -79,13 +79,13 @@ class HmelSeq(HmelNode):
     xs = []
     for c in self.children:
       if tt >= t:
-        return HmelSeq(xs)
+        break
       d = c.computeD()
       if tt+d <= t:
-        xs.append(c)
+        xs.append(c.copy())
       else:
         xs.append(c.playUntil(t-tt))
-        return HmelSeq(xs)
+        break
       tt += d
     return HmelSeq(xs)
 

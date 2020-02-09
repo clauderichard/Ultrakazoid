@@ -65,6 +65,19 @@ class HmelRep(HmelNode):
     return self.lf * x
 
   def playUntil(self,t):
-    raise Exception("not implemented")
+    from .hmelseq import HmelSeq
+    tt = 0
+    xs = []
+    for c in [self.child]*self.times + [self.remc]:
+      if tt >= t:
+        break
+      d = c.computeD()
+      if tt+d <= t:
+        xs.append(c.copy())
+      else:
+        xs.append(c.playUntil(t-tt))
+        break
+      tt += d
+    return HmelSeq(xs)
 
 ################################

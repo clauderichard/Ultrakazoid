@@ -69,7 +69,9 @@ class TestUkMiscellaneous(TestUkBase):
     self.equkz("cx=3","ccc")
     self.equkz("c [de]x=5","cdeded")
     self.equkz("c*7 [de]/3 x=3","c*7 [dedededed]/3")
-
+    self.equkz("[cd]x=5x=10","cdcdccdcdc")
+    self.equkz("[cd]x2x=5","cdcdc")
+    
   def test_expandto(self):
     self.equkz("c=6","c*6")
     self.equkz("[c]=6","c*6")
@@ -85,6 +87,49 @@ class TestUkMiscellaneous(TestUkBase):
     self.equkz("[cd]<<[cf]","cfdg")
     self.equkz("(cd)<<(cf)","(cfdg)")
     self.equkz("(cd)<<[cf]","(cd)(fg)")
+    self.equkz("[cd]<<[cf]^","c^f^d^g^")
+
+  def test_melodyinject_scale(self):
+    self.equkz("[cd]<<[cc^]<$[cg]","cgCG")
+    self.equkz("[cd]<<[cc^]<$[cg]^3",\
+     "[cgCG]^3")
+    self.equkz("[cd]<$[cg]^","[cd]<$[c^g^]")
+    x = "[dd^c] << [fdec]"
+    x2 = "[dd^c] << [gef^d]"
+    y = "[af^g^ea^gafgef^d]"
+    self.equkz(\
+     f"{x}<$[cg]^",\
+     f"{x}<$[[cg]^]")
+    self.equkz(f"""
+     [ {x} ] ^2 :x=8
+     """,f"""
+     [ {y} ] :x=8
+     """)
+    self.equkz(f"""
+     [ {x2} ] :x=8
+     """,f"""
+     [ {y} ] :x=8
+     """)
+    self.equkz(f"""
+     [ {x2} ] <$ [cd^ff^ga^] ^4
+     """,f"""
+     [ {y} ] <$ [[cd^ff^ga^] ^4]
+     """)
+    self.equkz(f"""
+     [ {x2} ] :x2 <$ [cd^ff^ga^] ^4
+     """,f"""
+     [ {y} ] :x2 <$ [[cd^ff^ga^] ^4]
+     """)
+    self.equkz(f"""
+     [ {x2} ] :x=8 <$ [cd^ff^ga^] ^4
+     """,f"""
+     [ {y} ] :x=8 <$ [[cd^ff^ga^] ^4]
+     """)
+    self.equkz(f"""
+     [ {x} ] ^2 :x=8 <$ [cd^ff^ga^] ^4
+     """,f"""
+     [ {y} ] :x=8 <$ [[cd^ff^ga^] ^4]
+     """)
 
   def test_melodyinject_durations(self):
     self.equkz("[c_2d_3]<<[cg]",\

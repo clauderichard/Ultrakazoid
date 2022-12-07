@@ -10,6 +10,7 @@ Ultrakazoid (UKZ for short) is a library, including a melody-building language, 
 * Song scripts should go in the same folder where "ukz" folder is. (exception for sit_scripts, test_scripts.py handles directories properly)
 * Running the song script should work.
 * Result will be a Midi file in a folder called AMidi, in the same folder as qpython3 in the phone
+* I made an album with Ultrakazoid! I converted and uploaded the music I wrote here: https://youtu.be/7ioDpl8poLc
 
 # Quick Architecture
 
